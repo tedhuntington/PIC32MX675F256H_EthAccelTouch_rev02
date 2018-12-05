@@ -49,7 +49,7 @@ typedef struct {
     uint32_t    I2CBus; //which I2CBus this accelerometer uses (=I2C1,I2C2, etc.)
     //volatile SDA; //SDA port pin
     //volatile SCL; //SCL port pin
-    volatile unsigned int *PowerPort; //port with the pin that powers the accelerometer
+    volatile uint32_t *PowerPort; //port with the (LATX) pin that powers the accelerometer
     uint32_t PowerPinMask; //used to set/reset pin used to power accelerometers on the PowerPort 0x0080=portpin7
     //volatile unsigned int   *IntPort;
     //uint16_t    IntBit; //Interrupt Port bit# that has te external interrupt

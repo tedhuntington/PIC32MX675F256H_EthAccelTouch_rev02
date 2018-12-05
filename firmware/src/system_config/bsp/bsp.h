@@ -8,12 +8,12 @@
     bsp.h
 
   Summary:      
-    Board Support Package Header File for PIC32MZ Embedded Connectivity (EF)
+    Board Support Package Header File for PIC32MX Embedded Connectivity (EF)
     Starter Kit.
 
   Description:
     This file contains constants, macros, type definitions and function
-    declarations required by the PIC32MZ Embedded Connectivity (EC) Starter Kit.
+    declarations required by the PIC32MX Embedded Connectivity (EC) Starter Kit.
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN

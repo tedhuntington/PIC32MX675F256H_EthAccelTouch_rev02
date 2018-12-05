@@ -124,6 +124,7 @@ void BSP_Initialize(void )
     //set RD2 and RD3 as open drain for I2C communication
     ODCDbits.ODCD2=1;
     ODCDbits.ODCD3=1;
+    ODCDbits.ODCD6=0; //no open drain for power pin
     
    //ACCEL PORT2 - top of PCB on right of PORT2
     TRISDbits.TRISD9=1; //SDA1 - input
@@ -133,6 +134,7 @@ void BSP_Initialize(void )
     //set RD9 and RD10 as open drain for I2C communication
     ODCDbits.ODCD9=1;
     ODCDbits.ODCD10=1;
+    ODCDbits.ODCD5=0; //no open drain for power pin
 
    //ACCEL PORT3 - right side of PCB
     TRISFbits.TRISF4=1; //SDA5 - input
@@ -142,6 +144,7 @@ void BSP_Initialize(void )
     //set RF4 and RF5 as open drain for I2C communication
     ODCFbits.ODCF4=1;
     ODCFbits.ODCF5=1;
+    ODCDbits.ODCD4=0; //no open drain for power pin
 
 
 //#endif 
@@ -263,7 +266,7 @@ void BSP_Initialize(void )
     //prescale of 64=800ns
     //prescale of 256=3.2us  but seems to be 1.8us ~7ns 6ns
     //T2CONbits.TCKPS=0x3; //prescale of 1:8
-    T2CONbits.TCKPS=0x7; //prescale of 1:256 every 3.2us
+    T2CONbits.TCKPS=0x7; //prescale of 1:256, one tick every 3.2us
     T2CONbits.T32=1;  //32 bit timer
     //convert to 3.2us counts
     //ACCEL_POLL_INTERVAL is 100 (ms) by default
@@ -275,7 +278,7 @@ void BSP_Initialize(void )
     //for touch sensors to start the ADC interrupt
     //(which sends back a sample from all active touch sensors)
 
-    TimerInterval=DEFAULT_TIMER_INTERVAL;
+    TimerInterval=DEFAULT_TIMER_INTERVAL; //10 (ms)
     
     //convert from us to TIMER/8 100ns
     //duty cycle must also be divided by 2
@@ -293,7 +296,7 @@ void BSP_Initialize(void )
 
     IFS0bits.T3IF=0; //clear the timer 2 interrupt flag
     //important: interrupt priority must match isr priority
-    IPC3bits.T3IP=3;//pic32mx had pri=4;//.INT2IP=4;  //priority - 3 bits
+    IPC3bits.T3IP=3;//3;//pic32mx had pri=4;//.INT2IP=4;  //priority - 3 bits
     IPC3bits.T3IS=3;//.INT2IS=2;  //subpriority -2 bits    
     IEC0bits.T3IE=1;        //enable Timer 2+3 interrupt- doesn't enable the timer
     //T2CONbits.ON=1; //enable timer2 (for 32-bit)

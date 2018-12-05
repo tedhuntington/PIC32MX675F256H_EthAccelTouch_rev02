@@ -66,6 +66,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "touchsensors.h"  //touch sensor data structures (which PORT PINs each touch sensor uses)
 
 extern EthAccelStatus EAStatus; //status of EthAccelTouch PCB
+extern SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 // *****************************************************************************
 // Section: System Interrupt Vector Functions
@@ -137,7 +138,7 @@ void __ISR(_TIMER_1_VECTOR, ipl5AUTO) IntHandlerDrvTmrInstance0(void)
 
  
  
-void __ISR(_TIMER_3_VECTOR,ipl4AUTO)  Timer3_ISR(void)   //IPL=Interrupt Priority Level
+void __ISR(_TIMER_3_VECTOR,ipl3AUTO)  Timer3_ISR(void)   //IPL=Interrupt Priority Level
 {
     uint8_t i;
 
