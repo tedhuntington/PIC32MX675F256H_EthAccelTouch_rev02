@@ -517,7 +517,7 @@ void SYS_Initialize ( void* data )
  
  
     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
-    SYS_INT_VectorPrioritySet(INT_VECTOR_UART3, INT_PRIORITY_LEVEL5);
+    SYS_INT_VectorPrioritySet(INT_VECTOR_UART3, INT_PRIORITY_LEVEL3);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_UART3, INT_SUBPRIORITY_LEVEL3);
 
     /* Initialize System Services */
@@ -536,8 +536,8 @@ void SYS_Initialize ( void* data )
 
     /*** Interrupt Service Initialization Code ***/
     SYS_INT_Initialize();
-
-    /*Setup the INT_SOURCE_EXTERNAL_0 and Enable it*/
+    
+#if 0 //tph there are no external (I2C interrupts in use currently)    /*Setup the INT_SOURCE_EXTERNAL_0 and Enable it*/
     SYS_INT_VectorPrioritySet(INT_VECTOR_INT0, INT_PRIORITY_LEVEL4);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_INT0, INT_SUBPRIORITY_LEVEL2);
     SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE0,INT_EDGE_TRIGGER_FALLING);
@@ -554,7 +554,7 @@ void SYS_Initialize ( void* data )
     SYS_INT_VectorSubprioritySet(INT_VECTOR_INT1, INT_SUBPRIORITY_LEVEL2);
     SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE1,INT_EDGE_TRIGGER_FALLING);
     SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_1);
-
+#endif 
 
 
 

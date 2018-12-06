@@ -296,7 +296,7 @@ void BSP_Initialize(void )
 
     IFS0bits.T3IF=0; //clear the timer 2 interrupt flag
     //important: interrupt priority must match isr priority
-    IPC3bits.T3IP=3;//3;//pic32mx had pri=4;//.INT2IP=4;  //priority - 3 bits
+    IPC3bits.T3IP=4;//3;//pic32mx had pri=4;//.INT2IP=4;  //priority - 3 bits
     IPC3bits.T3IS=3;//.INT2IS=2;  //subpriority -2 bits    
     IEC0bits.T3IE=1;        //enable Timer 2+3 interrupt- doesn't enable the timer
     //T2CONbits.ON=1; //enable timer2 (for 32-bit)

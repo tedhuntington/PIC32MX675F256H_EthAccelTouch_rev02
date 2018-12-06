@@ -64,6 +64,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_definitions.h"
 #include "accel.h"  //acelerometers data structures (which I2C and external interrupts each accel uses)
 #include "touchsensors.h"  //touch sensor data structures (which PORT PINs each touch sensor uses)
+#include <proc/p32mx675f256h.h>  //for mplabx parser which keeps going to p32mz0512
+
 
 extern EthAccelStatus EAStatus; //status of EthAccelTouch PCB
 extern SYSTEM_OBJECTS sysObj;
@@ -99,7 +101,7 @@ void __ISR(_I2C_5_VECTOR, ipl4AUTO) _IntHandlerDrvI2CInstance2(void)
      
 
  
-void __ISR(_UART_3_VECTOR, ipl5AUTO) _IntHandlerDrvUsartInstance0(void)
+void __ISR(_UART_3_VECTOR, ipl3AUTO) _IntHandlerDrvUsartInstance0(void)
 //`void __ISR(_UART_3A_VECTOR, ipl5AUTO) _IntHandlerDrvUsartInstance0(void)
 {
     DRV_USART_TasksTransmit(sysObj.drvUsart0);
@@ -110,7 +112,6 @@ void __ISR(_UART_3_VECTOR, ipl5AUTO) _IntHandlerDrvUsartInstance0(void)
  
  
 
- 
  
  
 void __ISR(_EXTERNAL_0_VECTOR, IPL4AUTO) _IntHandlerExternalInterruptInstance0(void)
@@ -138,10 +139,13 @@ void __ISR(_TIMER_1_VECTOR, ipl5AUTO) IntHandlerDrvTmrInstance0(void)
 
  
  
-void __ISR(_TIMER_3_VECTOR,ipl3AUTO)  Timer3_ISR(void)   //IPL=Interrupt Priority Level
+void __ISR(_TIMER_3_VECTOR,ipl4AUTO)  Timer3_ISR(void)   //IPL=Interrupt Priority Level
 {
     uint8_t i;
 
+    
+    //IFS0bits.T3IF=0; //clear interrupt- needs to be done early or else exceptions ccur -perhaps because other interrupts need to be serviced?
+    IFS0CLR=0x1000; //clear interrupt- needs to be done early or else exceptions ccur -perhaps because other interrupts need to be serviced?
 //    LATGbits.LATG8=!LATGbits.LATG8; //SCL4
 
     //Process Accelerometer polling
@@ -168,7 +172,8 @@ void __ISR(_TIMER_3_VECTOR,ipl3AUTO)  Timer3_ISR(void)   //IPL=Interrupt Priorit
         AD1CON1bits.ASAM=1; //autostart sampling
     } //
 
-    IFS0bits.T3IF=0; //clear interrupt- needs to be done early or else exceptions ccur -perhaps because other interrupts need to be serviced?
+    //IFS0bits.T3IF=0; //clear interrupt- needs to be done early or else exceptions ccur -perhaps because other interrupts need to be serviced?
+    //IFS0CLR=0x1000;
 }	//void __ISR(_TIMER_3_VECTOR,IPL3AUTO) Timer3_ISR(void) {  //IPL=Interrupt Priority Level
 
 

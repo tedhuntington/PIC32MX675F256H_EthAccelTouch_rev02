@@ -1014,6 +1014,7 @@ static void USART_Task(void)
                     DRV_USART_BufferAddWrite(appData.handleUSART0,
                             (DRV_USART_BUFFER_HANDLE * const)&appData.usartBQTxBufferHandle,
                             &usartBQTxData[0], sizeof(usartBQTxData));
+                    appData.usartBQTxWritten=sizeof(usartBQTxData); //TPH to stop transmitting "Test serial port..."
                 }
             }
 
